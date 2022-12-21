@@ -1,0 +1,18 @@
+const mineflayer = require('mineflayer');
+
+// Replace `host` and `port` with the IP address and port of the Minecraft server
+const bot = mineflayer.createBot({ host: 'localhost', port: 25565 });
+
+bot.on('chat', (username, message) => {
+  if (username === bot.username) return;
+  if (message.startsWith('!follow')) {
+    const playerToFollow = message.split(' ')[1];
+    bot.follow(playerToFollow, (err) => {
+      if (err) {
+        bot.chat(`Unable to follow ${playerToFollow}: ${err}`);
+      } else {
+        bot.chat(`Now following ${playerToFollow}`);
+      }
+    });
+  }
+});
